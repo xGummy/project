@@ -34,7 +34,7 @@ Hieronder is nog een tabel die weergeeft welke informatie wordt getoond in elke 
 
 #Data
 
-De dataset die ik hiervoor ga gebruiken is BLABLA. Deze dataset is weergegeven in een csv bestand. Omdat ik uit deze dataset dingen moet optellen,
+De dataset die ik hiervoor ga gebruiken is 'ingeschreven-wo' van DUO. Deze dataset is weergegeven in een csv bestand. Omdat ik uit deze dataset dingen moet optellen,
 en ook catogorien moet maken die in de csv onder elkaar staan (bijvoorbeeld gesorteerd op universiteit), zal ik de data weergeven in een json bestand.
 De opzet van deze json wordt als volgt:
 
