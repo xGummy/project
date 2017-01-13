@@ -6,25 +6,31 @@ import csv
 
 
 data = {}
-  
+richtingen = []
+studies = []  
+universiteiten = []
 
 with open('C:\Users\Emmaa\Documents\GitHub\project\dataset1.csv') as f:
     reader = csv.reader(f, delimiter=';')
     next(reader, None)
-    empty = [0,0,0,0,0,0,0,0,0,0]
     for row in reader:    
-        for i in range(0, len(empty)): 
-            if row[12 + i] != '':
-                empty[i] += int(row[12 + i])
-        print empty[i]
-        print i
-print empty
+        if row[6] not in richtingen:
+            richtingen.append(row[6])
+        if row[11] == "bachelor":
+            if row[9] not in studies:
+                studies.append(row[9])
+        if row[5] not in universiteiten:
+            universiteiten.append(row[5])
 
-universiteiten = ["Radboud Universiteit Nijmegen", "Wageningen University", "Rijksuniversiteit Groningen", "Universiteit Maastricht", "Technische Universiteit Eindhoven", "Tilburg University", "Universiteit van Amsterdam", "Vrije Universiteit Amsterdam", "Universiteit Twente", "Universiteit Utrecht", "Technische Universiteit Delft", "Universiteit Leiden", "Erasmus Universiteit Rotterdam"]
- 
+print richtingen
+print studies
+print universiteiten
 
-data["gen"] = {"2011": {"all": {"male": empty[0], "female": empty[1]}},"2012": {"all": {"male": empty[2], "female": empty[3]}}, "2013": {"all": {"male": empty[4], "female": empty[5]}} }
-print data
+#universiteiten = ["Radboud Universiteit Nijmegen", "Wageningen University", "Rijksuniversiteit Groningen", "Universiteit Maastricht", "Technische Universiteit Eindhoven", "Tilburg University", "Universiteit van Amsterdam", "Vrije Universiteit Amsterdam", "Universiteit Twente", "Universiteit Utrecht", "Technische Universiteit Delft", "Universiteit Leiden", "Erasmus Universiteit Rotterdam"]
+# 
+#
+#data["gen"] = {"2011": {"all": {"male": empty[0], "female": empty[1]}},"2012": {"all": {"male": empty[2], "female": empty[3]}}, "2013": {"all": {"male": empty[4], "female": empty[5]}} }
+#print data
             
         
         #for country in country_codes:

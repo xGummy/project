@@ -2,15 +2,18 @@ import csv
 import json  
 from collections import defaultdict
 
+
 f = open('C:\Users\Emmaa\Documents\GitHub\project\dataset1.csv', 'rU')
 next(f, None)
 
 h = defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: defaultdict(int)))))
-# empty = [0,0,0,0,0,0,0,0,0,0]
-
+jaren = ["2011", "2012", "2013", "2014", "2015"]
+ 
+ 
+# build the stucture for the jsonfile with defaultdict
 for line in f:
-	line_list = line.split(";")
-	if line_list[11] == "bachelor":
+    line_list = line.split(";")
+    if line_list[11] == "bachelor":
 	   if line_list[12] != "":
            	h["2011"][line_list[6]][line_list[9]][line_list[5]]["man"] += int(line_list[12])
            	h["2011"][line_list[6]][line_list[9]][line_list[5]]["vrouw"] += int(line_list[13])
@@ -23,24 +26,27 @@ for line in f:
            	h["2015"][line_list[6]][line_list[9]][line_list[5]]["man"] += int(line_list[20])
            	h["2015"][line_list[6]][line_list[9]][line_list[5]]["vrouw"] += int(line_list[21])
            	
-           	#for i in range(0, len(empty)): 
-            #        empty[i] += int(line_list[12 + i])
-            #        
-            #    h["2011"]["alle richtingen"] = {"man": empty[0], "vrouw": empty[1]}
-            #    h["2012"]["alle richtingen"] = {"man": empty[2], "vrouw": empty[3]}
-            #    h["2013"]["alle richtingen"] = {"man": empty[4], "vrouw": empty[5]}
-            #    h["2014"]["alle richtingen"] = {"man": empty[6], "vrouw": empty[7]}
-            #    h["2015"]["alle richtingen"] = {"man": empty[8], "vrouw": empty[9]}
-                    
-
-#           	h[line_list[7]]["profiel"][line_list[6]] += int(line_list[12])
 	
+
+#add all totals
+for jaar in h.keys():
+    for richting in h[jaar].keys():
+        for studie in h[jaar][richting].keys():
+            for universiteit in h[jaar][richting][studie].keys():
+                h[jaar][richting][studie]["totaal binnen studie"]["man"] += h[jaar][richting][studie][universiteit]["man"]
+                h[jaar][richting][studie]["totaal binnen studie"]["vrouw"] += h[jaar][richting][studie][universiteit]["vrouw"]
+                h[jaar][richting]["totaal binnen richting"][universiteit]["man"] += h[jaar][richting][studie][universiteit]["man"]
+                h[jaar][richting]["totaal binnen richting"][universiteit]["vrouw"] += h[jaar][richting][studie][universiteit]["vrouw"]
+                h[jaar][richting]["totaal binnen richting"]["totaal"]["man"] += h[jaar][richting][studie][universiteit]["man"]
+                h[jaar][richting]["totaal binnen richting"]["totaal"]["vrouw"] += h[jaar][richting][studie][universiteit]["vrouw"]
+                h[jaar]["totaal binnen jaar"]["alle studies"][universiteit]["vrouw"] += h[jaar][richting][studie][universiteit]["vrouw"]
+                h[jaar]["totaal binnen jaar"]["alle studies"][universiteit]["man"] += h[jaar][richting][studie][universiteit]["man"]
+                h[jaar]["totaal binnen jaar"]["alle studies"]["alle universiteiten"]["vrouw"] += h[jaar][richting][studie][universiteit]["vrouw"]
+                h[jaar]["totaal binnen jaar"]["alle studies"]["alle universiteiten"]["man"] += h[jaar][richting][studie][universiteit]["man"]
+
 # Parse the CSV into JSON  
-out = json.dumps(h, sort_keys=True, indent=4, separators=(',', ': ')) 
+out = json.dumps(h, sort_keys=True) 
 print "JSON parsed!"  
-
-print h["2011"]["economie"]["B Accountancy en Controlling"][2]
-
 
 # Save the JSON  
 f = open('C:\Users\Emmaa\Documents\GitHub\project\datastudies.json', 'w')  
