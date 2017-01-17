@@ -37,6 +37,10 @@ window.onload = function() {
     .append("svg:g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+    function FormatData(jaar, richting, studie)
+    {
+      
+    }
     d3.json("datastudies_pretty.json", function(error, json) {
     var data1 = json["2015"]
     var studies = []
@@ -66,7 +70,9 @@ window.onload = function() {
       .style("text-anchor", "end")
       .attr("dx", "-.8em")
       .attr("dy", "-.55em")
-      .attr("transform", "rotate(-90)" );
+      .attr("transform", "rotate(-90)" )
+
+    svg.selectAll(".tick")
 
 
   svg.append("g")
@@ -74,7 +80,7 @@ window.onload = function() {
   .selectAll("g")
       .data(data2)
     .enter().append("g")
-    .attr("class", "bar")
+    .attr("class", "bars")
     .style("fill", function(d, i) { return z(i); })
     .attr("transform", function(d, i) { return "translate(" + x1(i) + ",0)"; })
     .selectAll("rect")
@@ -84,6 +90,11 @@ window.onload = function() {
     .attr("height", function(d) {return height - y(d.aantal)})
     .attr("x", function(d) { return x0(d.richting); })
     .attr("y", function(d) { return y(d.aantal)});
-      })
+    .on("mouseover", function(d) {
+      d3.select(this).style("fill", "red");
+    })
+    .on("mouseout", function(d) {
+      d3.select(this).style("fill", "orange");
+    })
 
-};
+      })
