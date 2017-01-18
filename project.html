@@ -22,14 +22,31 @@
   display: none;
 }
 
+path {
+	stroke: steelblue;
+	stroke-width: 2;
+	fill: none;
+}
+
+.axis path,
+.axis line {
+	fill: none;
+	stroke: grey;
+	stroke-width: 1;
+	shape-rendering: crispEdges;
+}
+
+#female_line {
+  stroke: #ff1a8c;
+}
 </style>
 </head>
 
 <body>
   <h1> Verschillen in studiekeuze tussen jongens en meisjes </h1>
-  <svg id = "chart_A" >
-    <text x="10" y="20"> A </text>
-   </svg>
+  <svg id = "chart_A" ></svg>
+  <svg id = "chart_B" ></svg>
+  <svg id = "chart_C" ></svg>
 
 </body>
 </html>
