@@ -14,6 +14,7 @@ Het omschrijven naar een json file gaat goed , alleen het optellen van verschill
 -	In python vanuit het json bestand met de date die ik nu heb. Misschien is het op deze manier makkelijker om de goede waarden te selecteren.
 -	In javascript pas optellen. Misschien wel het makkelijkst maar is natuurlijk niet echt netjes.
 Voorlopig wissel ik steeds een beetje van methode omdat het allemaal niet lukt. Morgen zal ik er nog maar een keer hulp bij vragen.
+
 #Dag 5
 YES DE DATASET IS COMPLEET. Uiteindelijk is het toch gelukt door vanuit mijn eerder gemaakte json in python de waarden op te tellen. 
 #Dag 6
