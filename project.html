@@ -4,49 +4,64 @@
   <title>Verschillen in studiekeuze tussen jongens en meisjes</title>
   <link rel="stylesheet" type="text/css" href="project.css"/>
   <script src="https://d3js.org/d3.v3.min.js"></script>
-  <script src="project_save1.js"></script>
-  <style>
-
-.axis text {
-  font: 10px sans-serif;
-}
-
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-
-.x.axis path {
-  display: none;
-}
-
-path {
-	stroke: steelblue;
-	stroke-width: 2;
-	fill: none;
-}
-
-.axis path,
-.axis line {
-	fill: none;
-	stroke: grey;
-	stroke-width: 1;
-	shape-rendering: crispEdges;
-}
-
-#female_line {
-  stroke: #ff1a8c;
-}
-</style>
+  <script src="project_save2.js"></script>
 </head>
 
 <body>
-  <h1> Verschillen in studiekeuze tussen jongens en meisjes </h1>
-  <svg id = "chart_A" ></svg>
-  <svg id = "chart_B" ></svg>
-  <svg id = "chart_C" ></svg>
+  <header>
+    <div class="innertube">
+      <h1> Verschillen in studiekeuze tussen jongens en meisjes </h1>
+      <div id="myDropdown" class="dropdown-content">
+        <p class="uni" id="2011">2011</p>
+        <p class="uni" id="2012">2012</p>
+        <p class ="uni" id="2013">2013</p>
+        <p class ="uni" id="2014">2014</p>
+        <p class ="uni" id="2015">2015</p>
+      </div>
+    </div>
+  </header>
+
+  <div id="wrapper">
+
+    <main>
+      <div id="content">
+        <div class="innertube">
+          <svg id = "chart_A" ></svg>
+          <svg id = "chart_B" ></svg>
+          <svg id = "chart_C" ></svg>
+        </div>
+      </div>
+    </main>
+
+  </div>
+
+  <footer>
+    <div class="innertube">
+      <p>Footer...</p>
+    </div>
+  </footer>
+  <!--
+    <div class="dropdown">
+      <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+        <div id="myDropdown" class="dropdown-content">
+          <p class="uni" id="Erasmus Universiteit Rotterdam">Erasmus Universiteit Rotterdam</p>
+          <p class="uni" id="Radboud Universiteit Nijmegen">Radboud Universiteit Nijmegen</p>
+          <p class ="uni" id="Rijksuniversiteit Groningen">Rijksuniversiteit Groningen</p>
+          <p class ="uni" id="Technische Universiteit Delft">Technische Universiteit Delft</p>
+          <p class ="uni" id="Technische Universiteit Eindhoven">Technische Universiteit Eindhoven</p>
+          <p class ="uni" id="Tilburg University">Tilburg University</p>
+          <p class ="uni" id="Universiteit Leiden">Universiteit Leiden</p>
+          <p class = "uni" id="Universiteit Maastricht">Universiteit Maastricht</p>
+          <p class = "uni" id="Universiteit Twente">Universiteit Twente</p>
+          <p class = "uni" id="Universiteit Utrecht">Universiteit Utrecht</p>
+          <p class = "uni" id="Universiteit van Amsterdam">Universiteit van Amsterdam</p>
+          <p class = "uni"id="Vrije Universiteit Amsterdam">Vrije Universiteit Amsterdam</p>
+          <p class = "uni"id="Wageningen University">Wageningen University</p>
+      </div>
+  </div>
+  -->
+
+
 
 </body>
 </html>

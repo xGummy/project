@@ -1,0 +1,90 @@
+.axis text {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+path {
+	stroke: steelblue;
+	stroke-width: 2;
+	fill: none;
+}
+
+.axis path,
+.axis line {
+	fill: none;
+	stroke: grey;
+	stroke-width: 1;
+	shape-rendering: crispEdges;
+}
+
+#female_line {
+  stroke: #ff1a8c;
+}
+
+#myDropdown {
+  display: inline;
+}
+
+body {
+  margin:0;
+  padding:0;
+  font-family: Sans-Serif;
+  line-height: 1.5em;
+}
+
+header {
+  background: #ccc;
+  height: 100px;
+}
+
+header h1 {
+  margin: 0;
+  padding-top: 15px;
+}
+
+main {
+  padding-bottom: 10010px;
+  margin-bottom: -10000px;
+  float: left;
+  width: 100%;
+}
+
+
+footer {
+  clear: left;
+  width: 100%;
+  background: #ccc;
+  text-align: center;
+  padding: 4px 0;
+}
+
+#wrapper {
+  overflow: hidden;
+}
+
+#content {
+  margin-right: 230px; /* Same as 'nav' width */
+}
+
+.innertube {
+  margin: 15px; /* Padding for content */
+  margin-top: 0;
+  display: inline-block;
+}
+
+
+p {
+  color: #555;
+  display: inline;
+  padding: 30px;
+}

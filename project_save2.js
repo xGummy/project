@@ -1,17 +1,17 @@
 // Emma van Proosdij 10663657
 window.onload = function() {
 
-  var jaar = "2015"
+  var jaar = "2013"
       m = 2; // number of series
 
   var	parseDate = d3.time.format("%Y").parse;
 
   var margin = {top: 20, right: 30, bottom: 100, left: 50},
-      width = 960 - margin.left - margin.right,
-      height = 500 - margin.top - margin.bottom;
+      width = 1100 - margin.left - margin.right,
+      height = 300 - margin.top - margin.bottom;
       radius = Math.min(width, height) / 2;
 
-  var	x_line = d3.time.scale().range([0, width]);
+  var	x_line = d3.time.scale().range([0, width - 500]);
   var	y_line = d3.scale.linear().range([height, 0]);
 
   var	xAxis_line = d3.svg.axis().scale(x_line)
@@ -59,13 +59,13 @@ window.onload = function() {
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   var svg2 = d3.select("#chart_B")
-      .attr("width", width + margin.left + margin.right)
+      .attr("width", width - 500 + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
     .append("svg:g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   var svg3 = d3.select("#chart_C")
-      .attr("width", width + margin.left + margin.right)
+      .attr("width", width - 500 + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
     .append("svg:g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -75,13 +75,14 @@ window.onload = function() {
 
   d3.selectAll(".uni")
     .on("click", function(){
-      var uni = this.getAttribute("id");
-      prepareData(1, jaar, "alle", "alle", uni);
+      jaar = this.getAttribute("id");
+      prepareData(1, jaar);
     });
 
-  function prepareData(niveau, jaar, richting = "alle", studie = "alle", universiteit = "alle universiteiten") {
+  function prepareData(niveau, jaar, richting = "totaal", studie = "totaal", universiteit = "totaal") {
     svg.selectAll("*").remove();
-    d3.json("datastudies_pretty.json", function(error, json) {
+    d3.json("datastudies_2.json", function(error, json) {
+      console.log(json);
       prepareDataUversities(json, niveau, jaar, richting, studie);
       prepareDataYears(json, niveau, richting, studie, universiteit);
       prepareDataMain(json, niveau, jaar, richting, studie, universiteit);
@@ -90,54 +91,48 @@ window.onload = function() {
 
   function prepareDataMain(json, niveau, jaar, richting, studie, universiteit){
     if (niveau == 1){
-      var data = fetchData(json, json[jaar], "totaal binnen jaar", "key", "totaal binnen richting", "totaal");
+      var data = fetchData(json, json[jaar], "totaal", "key", "totaal", "totaal",jaar);
       drawBarChart(data, niveau, richting, universiteit, svg);
     }
     if (niveau == 2){
-      data = fetchData(json, json[jaar][richting], "totaal binnen richting", richting, "key", "totaal binnen studie");
+      data = fetchData(json, json[jaar][richting], "totaal", richting, "key", "totaal",jaar);
       drawBarChart(data, niveau, richting, universiteit, svg);
     }
     if (niveau == 3){
-      var data = [{"label": "man", "value": json[jaar][richting][studie]["totaal binnen studie"]["man"]}, {"label": "vrouw", "value": json[jaar][richting][studie]["totaal binnen studie"]["vrouw"]}]
+      var data = [{"label": "man", "value": json[jaar][richting][studie]["totaal"]["man"]}, {"label": "vrouw", "value": json[jaar][richting][studie]["totaal"]["vrouw"]}]
       drawPieChart(data);
     }
   }
   function prepareDataYears(json, niveau, richting, studie, universiteit){
 
     if (niveau == 1){
-      data = fetchData(json, json, "none", "totaal binnen jaar", "alle studies", universiteit, "key");
+      data = fetchData(json, json, "none", "totaal", "totaal", universiteit, "key", jaar);
     }
     if (niveau == 2){
-      if (universiteit == "alle universiteiten"){
-        universiteit = "totaal"
-      }
-      data = fetchData(json, json, "none", richting, "totaal binnen richting", universiteit, "key");
+      data = fetchData(json, json, "none", richting, "totaal", universiteit, "key", jaar);
     }
     if (niveau == 3){
-      if (universiteit == "alle universiteiten"){
-        universiteit = "totaal binnen studie"
-      }
-      data = fetchData(json, json, "none", richting, studie, universiteit, "key");
+      data = fetchData(json, json, "none", richting, studie, universiteit, "key", jaar);
     }
     DrawLineChart(data);
 }
 
   function prepareDataUversities(json, niveau, jaar, richting, studie){
+    svg2.selectAll("*").remove();
     if (niveau == 1){
-      data = fetchData(json, json[jaar]["totaal binnen jaar"]["alle studies"], "alle universiteiten", "totaal binnen jaar", "alle studies", "key")
+      data = fetchData(json, json[jaar]["totaal"]["totaal"], "totaal", "totaal", "totaal", "key", jaar)
     }
     if (niveau == 2){
-      svg2.selectAll("*").remove();
-      data = fetchData(json, json[jaar][richting]["totaal binnen richting"], "totaal", richting, "totaal binnen richting", "key")
+      data = fetchData(json, json[jaar][richting]["totaal"], "totaal", richting, "totaal", "key" , jaar)
     }
     if (niveau == 3){
       svg2.selectAll("*").remove();
-      data = fetchData(json, json[jaar][richting][studie], "totaal binnen studie", richting, studie, "key");
+      data = fetchData(json, json[jaar][richting][studie], "totaal", richting, studie, "key", jaar);
     }
-    drawBarChart(data, niveau, richting = "alle", "alle", svg2)
+    drawBarChart(data, niveau, richting = "totaal", "totaal", svg2)
   }
 
-  function fetchData(data, search, avoid, richting, studie, universiteit, jaar = "2015") {
+  function fetchData(data, search, avoid, richting, studie, universiteit, jaar) {
       var man = [];
       var vrouw = [];
       var keys = []
@@ -250,7 +245,7 @@ chart.append("g")
     })
     .on("click", function(d) {
       if (niveau == 1){
-      prepareData(2, jaar, d, "alle", universiteit)
+      prepareData(2, jaar, d, "totaal", universiteit)
       }
       if (niveau == 2){
         prepareData(3, jaar, richting, d, universiteit)

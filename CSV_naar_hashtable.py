@@ -33,22 +33,23 @@ for jaar in h.keys():
     for richting in h[jaar].keys():
         for studie in h[jaar][richting].keys():
             for universiteit in h[jaar][richting][studie].keys():
-                h[jaar][richting][studie]["totaal binnen studie"]["man"] += h[jaar][richting][studie][universiteit]["man"]
-                h[jaar][richting][studie]["totaal binnen studie"]["vrouw"] += h[jaar][richting][studie][universiteit]["vrouw"]
-                h[jaar][richting]["totaal binnen richting"][universiteit]["man"] += h[jaar][richting][studie][universiteit]["man"]
-                h[jaar][richting]["totaal binnen richting"][universiteit]["vrouw"] += h[jaar][richting][studie][universiteit]["vrouw"]
-                h[jaar][richting]["totaal binnen richting"]["totaal"]["man"] += h[jaar][richting][studie][universiteit]["man"]
-                h[jaar][richting]["totaal binnen richting"]["totaal"]["vrouw"] += h[jaar][richting][studie][universiteit]["vrouw"]
-                h[jaar]["totaal binnen jaar"]["alle studies"][universiteit]["vrouw"] += h[jaar][richting][studie][universiteit]["vrouw"]
-                h[jaar]["totaal binnen jaar"]["alle studies"][universiteit]["man"] += h[jaar][richting][studie][universiteit]["man"]
-                h[jaar]["totaal binnen jaar"]["alle studies"]["alle universiteiten"]["vrouw"] += h[jaar][richting][studie][universiteit]["vrouw"]
-                h[jaar]["totaal binnen jaar"]["alle studies"]["alle universiteiten"]["man"] += h[jaar][richting][studie][universiteit]["man"]
+                h[jaar][richting][studie]["totaal"]["man"] += h[jaar][richting][studie][universiteit]["man"]
+                h[jaar][richting][studie]["totaal"]["vrouw"] += h[jaar][richting][studie][universiteit]["vrouw"]
+                h[jaar][richting]["totaal"][universiteit]["man"] += h[jaar][richting][studie][universiteit]["man"]
+                h[jaar][richting]["totaal"][universiteit]["vrouw"] += h[jaar][richting][studie][universiteit]["vrouw"]
+                h[jaar][richting]["totaal"]["totaal"]["man"] += h[jaar][richting][studie][universiteit]["man"]
+                h[jaar][richting]["totaal"]["totaal"]["vrouw"] += h[jaar][richting][studie][universiteit]["vrouw"]
+                h[jaar]["totaal"]["totaal"][universiteit]["vrouw"] += h[jaar][richting][studie][universiteit]["vrouw"]
+                h[jaar]["totaal"]["totaal"][universiteit]["man"] += h[jaar][richting][studie][universiteit]["man"]
+                h[jaar]["totaal"]["totaal"]["totaal"]["vrouw"] += h[jaar][richting][studie][universiteit]["vrouw"]
+                h[jaar]["totaal"]["totaal"]["totaal"]["man"] += h[jaar][richting][studie][universiteit]["man"]
 
 # Parse the CSV into JSON  
 out = json.dumps(h, sort_keys=True) 
+print out
 print "JSON parsed!"  
 
 # Save the JSON  
-f = open('C:\Users\Emmaa\Documents\GitHub\project\datastudies.json', 'w')  
+f = open('C:\Users\Emmaa\Documents\GitHub\project\datastudies_2.json', 'w')  
 f.write(out)  
 print "JSON saved!"
