@@ -7,8 +7,8 @@ window.onload = function() {
   var	parseDate = d3.time.format("%Y").parse;
 
   var margin = {top: 20, right: 30, bottom: 100, left: 50},
-      width = 960 - margin.left - margin.right,
-      height = 500 - margin.top - margin.bottom;
+      width = 1000 - margin.left - margin.right,
+      height = 300 - margin.top - margin.bottom;
       radius = Math.min(width, height) / 2;
 
   var	x_line = d3.time.scale().range([0, width]);
@@ -75,8 +75,8 @@ window.onload = function() {
 
   d3.selectAll(".uni")
     .on("click", function(){
-      var uni = this.getAttribute("id");
-      prepareData(1, jaar, "alle", "alle", uni);
+      jaar = this.getAttribute("id");
+      prepareData(1, jaar);
     });
 
   function prepareData(niveau, jaar, richting = "alle", studie = "alle", universiteit = "alle universiteiten") {
@@ -124,6 +124,7 @@ window.onload = function() {
 
   function prepareDataUversities(json, niveau, jaar, richting, studie){
     if (niveau == 1){
+      svg2.selectAll("*").remove();
       data = fetchData(json, json[jaar]["totaal binnen jaar"]["alle studies"], "alle universiteiten", "totaal binnen jaar", "alle studies", "key")
     }
     if (niveau == 2){

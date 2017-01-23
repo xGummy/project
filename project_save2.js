@@ -1,17 +1,18 @@
 // Emma van Proosdij 10663657
 window.onload = function() {
 
+  genders = ["man", "vrouw"];
   var jaar = "2013"
       m = 2; // number of series
 
   var	parseDate = d3.time.format("%Y").parse;
 
   var margin = {top: 20, right: 30, bottom: 100, left: 50},
-      width = 1100 - margin.left - margin.right,
-      height = 300 - margin.top - margin.bottom;
+      width = 1000 - margin.left - margin.right,
+      height = 500 - margin.top - margin.bottom;
       radius = Math.min(width, height) / 2;
 
-  var	x_line = d3.time.scale().range([0, width - 500]);
+  var	x_line = d3.time.scale().range([0, 400]);
   var	y_line = d3.scale.linear().range([height, 0]);
 
   var	xAxis_line = d3.svg.axis().scale(x_line)
@@ -59,14 +60,14 @@ window.onload = function() {
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   var svg2 = d3.select("#chart_B")
-      .attr("width", width - 500 + margin.left + margin.right)
+  .attr("width", 400 + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
     .append("svg:g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   var svg3 = d3.select("#chart_C")
-      .attr("width", width - 500 + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
+    .attr("width", 400 + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
     .append("svg:g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -82,7 +83,6 @@ window.onload = function() {
   function prepareData(niveau, jaar, richting = "totaal", studie = "totaal", universiteit = "totaal") {
     svg.selectAll("*").remove();
     d3.json("datastudies_2.json", function(error, json) {
-      console.log(json);
       prepareDataUversities(json, niveau, jaar, richting, studie);
       prepareDataYears(json, niveau, richting, studie, universiteit);
       prepareDataMain(json, niveau, jaar, richting, studie, universiteit);
@@ -126,7 +126,6 @@ window.onload = function() {
       data = fetchData(json, json[jaar][richting]["totaal"], "totaal", richting, "totaal", "key" , jaar)
     }
     if (niveau == 3){
-      svg2.selectAll("*").remove();
       data = fetchData(json, json[jaar][richting][studie], "totaal", richting, studie, "key", jaar);
     }
     drawBarChart(data, niveau, richting = "totaal", "totaal", svg2)
@@ -168,8 +167,21 @@ window.onload = function() {
       vrouw.push({"key": keys[key], "value": parseInt(data[jaar][richting][studie][universiteit]["vrouw"]) })
       }
       data = [man, vrouw];
-      x0.domain(keys).rangeBands([0, width], .2);
+      bla = [0,1];
+      console.log(data);
+      if (keys[0] == "economie"){
+        x0.domain(keys).rangeBands([0, width], .2);
+      }
+      else {
+        x0.domain(keys).rangeBands([0, 400], .2);
+      }
       x1.domain(d3.range(m)).rangeBands([0, x0.rangeBand()]);
+      y.domain([0, Math.max(d3.max(vrouw, function(d) {  return d.value; }), d3.max(man, function(d) {  return d.value; }))]);
+      var stack = d3.layout.stack()
+            .y(function(d) {return d.value; })
+            .values(function(d) {return [d];})
+      var stacked = stack(data);
+      console.log(stacked);
       return data;
 
   }
@@ -222,7 +234,6 @@ function DrawLineChart(data){
   }
 
 function drawBarChart(data3, niveau, richting = "alle", universiteit, chart = svg){
-  y.domain([0, d3.max(data3, function(d, i) { return d[i].value; })]);
 
 chart.append("g")
     .attr("class", "y axis")
@@ -233,6 +244,9 @@ chart.append("g")
     .attr("transform", "translate(0," + height + ")")
     .call(xAxis)
     .selectAll("text")
+    .attr('font-family', 'FontAwesome')
+    .attr('font-size', function(d) { return d.size+'em'} )
+    .text(function(d) { return '[&#xf2bc]' })
     .style("text-anchor", "end")
     .attr("dx", "-.8em")
     .attr("dy", "-.55em")
