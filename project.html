@@ -5,8 +5,6 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="project.css"/>
-  <script src="https://d3js.org/d3.v3.min.js"></script>
-  <script src="project_save2.js"></script>
 </head>
 
 <body>
@@ -14,25 +12,85 @@
     <div class="page-header">
       <h1> Verschillen in studiekeuze tussen jongens en meisjes </h1>
         <div class="btn-group btn-group-lg" role="group" aria-label="...">
-          <button type="button" class="btn btn-default">Small</button>
-          <button type="button" class="btn btn-default">Medium</button>
-          <button type="button" class="btn btn-default">Large</button>
+          <button type="button" class="btn btn-default" class="uni" id="2011">2011</button>
+          <button type="button" class="btn btn-default" class="uni" id="2012">2012</button>
+          <button type="button" class="btn btn-default" class="uni" id="2013">2013</button>
+          <button type="button" class="btn btn-default" class="uni" id="2014">2014</button>
+          <button type="button" class="btn btn-default" class="uni" id="2015">2015</button>
         </div>
-
-      <div id="myDropdown" class="dropdown-content">
-        <p class="uni" id="2011">2011</p>
-        <p class="uni" id="2012">2012</p>
-        <p class ="uni" id="2013">2013</p>
-        <p class ="uni" id="2014">2014</p>
-        <p class ="uni" id="2015">2015</p>
-      </div>
     </div>
   </div>
 
   <div class = "jumbotron">
-    <h2> verschillen binnen richting </h2>
-    <svg id = "chart_A" ></svg>
+    <div class="container">
+    <div class="row">
+      <div class = "col-lg-9 col-md-9 col-sm-12 col-xs-12">
+        <h2 id="title_A"> verschillen tussen richtingen </h2>
+        <svg id = "chart_A" ></svg>
+      </div>
+      <div class = "col-lg-3 col-md-3 col-sm-6 col-xs-6">
+          <div class="timeline-centered">
+
+          <article class="timeline-entry">
+
+              <div class="timeline-entry-inner">
+
+                  <div class="timeline-icon bg-success" id="n1">
+                      <i class="entypo-feather"></i>
+                  </div>
+
+                  <div class="timeline-label">
+                      <h2>Niveau 1: verschillen tussen richtingen</h2>
+                      <p>Hier zie je de verschillen tussen jongens en meisjes binnen elke richting. Klik op een richting om naar het volgende niveau te gaan</p>
+                  </div>
+              </div>
+
+          </article>
+
+
+          <article class="timeline-entry">
+
+              <div class="timeline-entry-inner">
+
+                  <div class="timeline-icon bg-success" id="n2">
+                      <i class="entypo-suitcase"></i>
+                  </div>
+
+                  <div class="timeline-label">
+                      <h2>Niveau 2: Verschillen binnen richting</h2>
+                      <p>Hier zie je de verschillen binnen een door jou gekozen richting. Klik op een studie om naar het volgende niveau te gaan</p>
+                  </div>
+              </div>
+
+          </article>
+
+
+          <article class="timeline-entry">
+
+              <div class="timeline-entry-inner">
+
+                  <div class="timeline-icon bg-success" id="n3">
+                      <i class="entypo-location"></i>
+                  </div>
+
+                  <div class="timeline-label">
+                      <h2>Niveau 3: studie</h2>
+
+                      <p>Hier zie je de man vrouw verhouding binnen de door jou geslecteerde studie</p>
+
+                  </div>
+              </div>
+
+          </article>
+
+
+      </div>
+
+    </div>
+    </div>
   </div>
+  </div>
+
 
   <div class = "container">
     <div class = "row">
@@ -77,5 +135,7 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+  <script src="project_save2.js"></script>
 </body>
 </html>

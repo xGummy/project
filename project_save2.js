@@ -1,14 +1,15 @@
 // Emma van Proosdij 10663657
 window.onload = function() {
 
-  genders = ["man", "vrouw"];
-  var jaar = "2013"
+  var temp_richting;
+  var niveau = 1;
+  var jaar = "2015"
       m = 2; // number of series
 
   var	parseDate = d3.time.format("%Y").parse;
 
-  var margin = {top: 20, right: 30, bottom: 100, left: 50},
-      width = 1000 - margin.left - margin.right,
+  var margin = {top: 20, right: 30, bottom: 150, left: 50},
+      width = 800 - margin.left - margin.right,
       height = 500 - margin.top - margin.bottom;
       radius = Math.min(width, height) / 2;
 
@@ -71,10 +72,34 @@ window.onload = function() {
     .append("svg:g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+function changeLevelColor(niveau){
+  var buttons = ["#n1","#n2","#n3"]
+  d3.selectAll(".timeline-centered .timeline-entry .timeline-entry-inner .timeline-icon.bg-success")
+  .style("background-color","lightgrey");
+  d3.select(buttons[niveau - 1])
+  .style("background-color", "#00a651");
+}
+  d3.select("#n1")
+    .on("click", function(){
+      changeLevelColor(1);
+      prepareData(niveau, jaar);
+      d3.select("#title_A")
+        .html("verschillen tussen richtingen");
+    })
+    .style("background-color", function(){if (niveau == 1){return "#00a651"}});
 
-  prepareData(1, jaar);
+    d3.select("#n2")
+      .on("click", function(){
+        changeLevelColor(2);
+        prepareData(2, jaar, temp_richting)
+        d3.select("#title_A")
+          .html("verschillen tussen studies, richting: " + temp_richting);
+      })
 
-  d3.selectAll(".uni")
+
+  prepareData(niveau, jaar);
+
+  d3.selectAll(".btn.btn-default")
     .on("click", function(){
       jaar = this.getAttribute("id");
       prepareData(1, jaar);
@@ -169,7 +194,7 @@ window.onload = function() {
       data = [man, vrouw];
       bla = [0,1];
       console.log(data);
-      if (keys[0] == "economie"){
+      if (universiteit_oud == "totaal"){
         x0.domain(keys).rangeBands([0, width], .2);
       }
       else {
@@ -244,13 +269,10 @@ chart.append("g")
     .attr("transform", "translate(0," + height + ")")
     .call(xAxis)
     .selectAll("text")
-    .attr('font-family', 'FontAwesome')
-    .attr('font-size', function(d) { return d.size+'em'} )
-    .text(function(d) { return '[&#xf2bc]' })
     .style("text-anchor", "end")
     .attr("dx", "-.8em")
     .attr("dy", "-.55em")
-    .attr("transform", "rotate(-90)" )
+    .attr("transform", "rotate(-45)" )
     .on("mouseover", function(d) {
       d3.select(this).style("fill", "blue");
     })
@@ -259,10 +281,17 @@ chart.append("g")
     })
     .on("click", function(d) {
       if (niveau == 1){
-      prepareData(2, jaar, d, "totaal", universiteit)
+      temp_richting = d;
+      d3.select("#title_A")
+        .html("verschillen tussen studies, richting: " + d);
+      changeLevelColor(niveau+1);
+      prepareData(niveau+1, jaar, d, "totaal", universiteit);
       }
       if (niveau == 2){
-        prepareData(3, jaar, richting, d, universiteit)
+        d3.select("#title_A")
+          .html("verhoudingen binnen studie " + d);
+        changeLevelColor(niveau+1);
+        prepareData(niveau+1, jaar, richting, d, universiteit);
       }
     })
 

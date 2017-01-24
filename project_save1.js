@@ -7,7 +7,7 @@ window.onload = function() {
   var	parseDate = d3.time.format("%Y").parse;
 
   var margin = {top: 20, right: 30, bottom: 100, left: 50},
-      width = 1000 - margin.left - margin.right,
+      width = 500 - margin.left - margin.right,
       height = 300 - margin.top - margin.bottom;
       radius = Math.min(width, height) / 2;
 
