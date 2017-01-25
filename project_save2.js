@@ -72,6 +72,51 @@ window.onload = function() {
     .append("svg:g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+  var tip = d3.tip()
+    .attr('class', 'd3-tip')
+    .offset([-10, 0])
+    .html(function(d) {
+      return "<span style='color:black'>" + d.key + "</span>" + "<br><strong>aantal studenten:</strong> <span style='color:white'>" + d.value + "</span>";
+    })
+
+  svg.call(tip);
+
+
+
+    //Variable to hold autocomplete options
+    var keys;
+
+    //Load US States as options from CSV - but this can also be created dynamically
+    d3.csv("names.csv",function (csv) {
+        keys=csv;
+        start();
+        console.log("started");
+    });
+
+
+    //Call back for when user selects an option
+    function onSelect(d) {
+      temp_richting = d.richting
+      d3.select("#title_A")
+        .html("verhoudingen binnen studie " + d.studie);
+      changeLevelColor(3);
+      prepareData(3, jaar, d.richting, d.studie, "totaal");
+    }
+
+    //Setup and render the autocomplete
+    function start() {
+        var mc = autocomplete(document.getElementById('test'))
+                .keys(keys)
+                .dataField("studie")
+                .placeHolder("zoek studie")
+                .width(960)
+                .height(500)
+                .onSelected(onSelect)
+                .render();
+    }
+
+
+
 function changeLevelColor(niveau){
   var buttons = ["#n1","#n2","#n3"]
   d3.selectAll(".timeline-centered .timeline-entry .timeline-entry-inner .timeline-icon.bg-success")
@@ -103,11 +148,12 @@ function changeLevelColor(niveau){
     .on("click", function(){
       jaar = this.getAttribute("id");
       prepareData(1, jaar);
+      changeLevelColor(1);
     });
 
   function prepareData(niveau, jaar, richting = "totaal", studie = "totaal", universiteit = "totaal") {
     svg.selectAll("*").remove();
-    d3.json("datastudies_2.json", function(error, json) {
+    d3.json("datastudies_3.json", function(error, json) {
       prepareDataUversities(json, niveau, jaar, richting, studie);
       prepareDataYears(json, niveau, richting, studie, universiteit);
       prepareDataMain(json, niveau, jaar, richting, studie, universiteit);
@@ -222,7 +268,15 @@ function changeLevelColor(niveau){
   // append arc
   g.append("path")
       .attr("d", arc)
-      .style("fill", function(d, i) { return z(i); });
+      .style("fill", function(d, i) { return z(i); })
+      .on("mouseover", function(d) {
+        d3.select(this).style("fill-opacity", 0.8);
+        tip.show(d);
+      })
+      .on("mouseout", function(d) {
+        d3.select(this).style("fill-opacity", 1);
+        tip.hide(d);
+      });
 }
 
 function DrawLineChart(data){
@@ -247,6 +301,32 @@ function DrawLineChart(data){
     .attr("class", "line")
     .attr("id", "female_line")
     .attr("d", valueline(data[1]));
+
+    svg3.selectAll("dot")
+        .data(data[0])
+    .enter().append("circle")
+        .attr("r", 4)
+        .attr("cx", function(d) { return x_line(d.key); })
+        .attr("cy", function(d) { return y_line(d.value); })
+        .style("fill", "steelblue")
+        .on("mouseover", function(d) {
+            tip.show(d);})
+        .on("mouseout", function(d) {
+            tip.hide(d);
+        });
+
+  svg3.selectAll("dot")
+      .data(data[1])
+  .enter().append("circle")
+      .attr("r", 4)
+      .attr("cx", function(d) { return x_line(d.key); })
+      .attr("cy", function(d) { return y_line(d.value); })
+      .style("fill", "#ff1a8c")
+      .on("mouseover", function(d) {
+          tip.show(d);})
+      .on("mouseout", function(d) {
+          tip.hide(d);
+      });
 
   svg3.append("g")			// Add the X Axis
     .attr("class", "x axis")
@@ -312,9 +392,28 @@ chart.append("g")
   .attr("y", function(d) { return y(d.value)})
   .on("mouseover", function(d) {
     d3.select(this).style("fill-opacity", 0.8);
+    tip.show(d);
   })
   .on("mouseout", function(d) {
     d3.select(this).style("fill-opacity", 1);
+    tip.hide(d);
+  })
+  .on("click", function(d) {
+    if (niveau == 1){
+    temp_richting = d.key;
+    d3.select("#title_A")
+      .html("verschillen tussen studies, richting: " + d.key);
+    changeLevelColor(niveau+1);
+    prepareData(niveau+1, jaar, d.key, "totaal", universiteit);
+    tip.hide(d);
+    }
+    if (niveau == 2){
+      d3.select("#title_A")
+        .html("verhoudingen binnen studie " + d.key);
+      changeLevelColor(niveau+1);
+      prepareData(niveau+1, jaar, richting, d.key, universiteit);
+      tip.hide(d);
+    }
   })
 }
 

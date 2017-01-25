@@ -18,7 +18,7 @@ with open('C:\Users\Emmaa\Documents\GitHub\project\dataset1.csv') as f:
             richtingen.append(row[6])
         if row[11] == "bachelor":
             if row[9] not in studies:
-                studies.append(row[9])
+                studies.append({"studie":row[9][2:], "richting":row[6]})
         if row[5] not in universiteiten:
             universiteiten.append(row[5])
 
@@ -42,5 +42,16 @@ print universiteiten
 #with open('C:\Users\Emmaa\Documents\GitHub\DataProcessing\homework\week 7\energy2010.json', 'w') as outfile:
 #    json.dump(data, outfile, sort_keys=True)                                        
     
+with open('names.csv', 'w') as csvfile:
+    fieldnames = ['studie', 'richting']
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+    writer.writeheader()
+    for i in studies:
+        writer.writerow(i)
+  
     
+    print csvfile
+
+
 

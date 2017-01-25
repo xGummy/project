@@ -15,6 +15,7 @@ for line in f:
     line_list = line.split(";")
     if line_list[11] == "bachelor":
 	   if line_list[12] != "":
+	        line_list[9] = line_list[9][2:]
            	h["2011"][line_list[6]][line_list[9]][line_list[5]]["man"] += int(line_list[12])
            	h["2011"][line_list[6]][line_list[9]][line_list[5]]["vrouw"] += int(line_list[13])
            	h["2012"][line_list[6]][line_list[9]][line_list[5]]["man"] += int(line_list[14])
@@ -50,6 +51,6 @@ print out
 print "JSON parsed!"  
 
 # Save the JSON  
-f = open('C:\Users\Emmaa\Documents\GitHub\project\datastudies_2.json', 'w')  
+f = open('C:\Users\Emmaa\Documents\GitHub\project\datastudies_3.json', 'w')  
 f.write(out)  
 print "JSON saved!"
