@@ -49,6 +49,7 @@ function autocomplete(parent) {
         _selection.each(function (data) {
 
             // Select the svg element, if it exists.
+            console.log(d3.select("#bp-ac").data([data]));
             var container = d3.select("#bp-ac").data([data]);
             var enter = container.enter()
                     .append("div")
@@ -143,7 +144,7 @@ function autocomplete(parent) {
             function search() {
 
                 var str=_searchTerm;
-                
+
 
                 if (str.length >= _minLength) {
                     _matches = [];

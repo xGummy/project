@@ -13,7 +13,7 @@ jaren = ["2011", "2012", "2013", "2014", "2015"]
 # build the stucture for the jsonfile with defaultdict
 for line in f:
     line_list = line.split(";")
-    if line_list[11] == "bachelor":
+    if line_list[11] == "master":
 	   if line_list[12] != "":
 	        line_list[9] = line_list[9][2:]
            	h["2011"][line_list[6]][line_list[9]][line_list[5]]["man"] += int(line_list[12])
@@ -51,6 +51,6 @@ print out
 print "JSON parsed!"  
 
 # Save the JSON  
-f = open('C:\Users\Emmaa\Documents\GitHub\project\datastudies_3.json', 'w')  
+f = open('C:\Users\Emmaa\Documents\GitHub\project\datastudies_master.json', 'w')  
 f.write(out)  
 print "JSON saved!"

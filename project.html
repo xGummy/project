@@ -11,7 +11,6 @@
 </head>
 
 <body>
-  <div id="#bp-ac"></div>
   <div id="test"> </div>
   <div class="container">
     <div class="page-header">
@@ -35,16 +34,6 @@
       </div>
 
         <div class="col-md-6">
-            <div id="custom-search-input">
-                <div class="input-group col-md-12">
-                    <input type="text" class="form-control input-lg" placeholder="zoek studie" />
-                    <span class="input-group-btn">
-                        <button class="btn btn-info btn-lg" type="button">
-                            <i class="glyphicon glyphicon-search"></i>
-                        </button>
-                    </span>
-                </div>
-            </div>
         </div>
       </div>
     </div>
@@ -54,7 +43,8 @@
     <div class="container">
     <div class="row">
       <div class = "col-lg-9 col-md-9 col-sm-12 col-xs-12">
-        <h2 id="title_A"> verschillen tussen richtingen </h2>
+        <h2 id="title_A1"> verschillen tussen richtingen </h2>
+        <h4 id="title_A2">alle richtingen</h4>
         <svg id = "chart_A" ></svg>
       </div>
       <div class = "col-lg-3 col-md-3 col-sm-6 col-xs-6">
@@ -117,18 +107,23 @@
 
     </div>
     </div>
+    <ul id="legend">
+        <li><span class="bluebox"></span>jongens</li>
+        <li><span class="pinkbox"></span>meisjes</li>
+    </ul>
   </div>
   </div>
-
 
   <div class = "container">
     <div class = "row">
       <div class = "col-lg-6 col-md-6 col-sm-12 col-xs-12">
         <h3> Verschillen binnen universiteiten </h3>
+        <h4 id="title_B"> alle richtingen </h4>
         <svg id = "chart_B" ></svg>
       </div>
       <div class = "col-lg-6 col-md-6 col-sm-12 col-xs-12">
-        <h3> Verschillen over tijd </h3>
+        <h3> ontwikkeling in jaren </h3>
+        <h4 id="title_C"> alle richtingen </h4>
         <svg id = "chart_C" ></svg>
       </div>
   </div>

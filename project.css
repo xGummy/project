@@ -408,3 +408,11 @@ img {
                       top: 100%;
                       left: 0;
                     }
+
+                    #test {
+                      position: absolute;
+                    }
+
+              #legend li { float: left; margin-right: 50px; list-style-type: none; font-family: "bariol_regularregular";}
+              .bluebox { float: left; margin-right: 15px; width: 20px; height: 20px; background-color: steelblue;}
+              .pinkbox { float: left; margin-right: 15px; width: 20px; height: 20px; background-color: #ff1a8c;}
