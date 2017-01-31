@@ -1,12 +1,54 @@
 // Emma van Proosdij 10663657
 window.onload = function() {
 
-  var temp_richting;
+d3.json("datastudies_values.json", function(error, json) {
+  var data = json;
+  console.log(data);
+
+    $("#universiteit").select2();
+    $("#studie").select2({
+      data: data
+    })
+
+    $('#studie').select2({
+      placeholder: 'zoek studie'
+    });
+
+    $('#studie').on('select2:select', function (evt) {
+    console.log(evt.params.data.id);
+    console.log(evt.params.data.text);
+    temp_richting = evt.params.data.id
+    changeLevelColor(3);
+    prepareData(3, jaar, evt.params.data.id, evt.params.data.text, "totaal");
+  });
+
+  $('#universiteit').on('select2:select', function (evt) {
+    if (evt.params.data.text != "alle universiteiten"){
+    universiteit = evt.params.data.text;
+  }
+  else{
+    universiteit = "totaal";
+  }
+    console.log(universiteit);
+  prepareData(1, jaar, "totaal", "totaal", universiteit)
+  changeLevelColor(1);
+  d3.select("#title_A3")
+    .html(evt.params.data.text);
+  d3.select("#title_C1")
+    .html(evt.params.data.text);
+});
+});
+
+
+
+  var universiteit = "totaal";
+  var temp_richting = 0;
   var niveau = 1;
   var jaar = "2015"
       m = 2; // number of series
 
   var	parseDate = d3.time.format("%Y").parse;
+  var formatTime = d3.time.format("%Y");
 
   var margin = {top: 20, right: 30, bottom: 150, left: 50},
       width = 800 - margin.left - margin.right,
@@ -83,44 +125,13 @@ window.onload = function() {
     .attr('class', 'd3-tip')
     .offset([-10, 0])
     .html(function(d) {
-      return "<span style='color:black'>" + d.key + "</span>" + "<br><strong>aantal jongens:</strong> <span style='color:white'>" + d.value + "</span>";
+      return "<span style='color:black'>" + d["key"] + "</span>" + "<br><strong>aantal jongens:</strong> <span style='color:white'>" + d.value + "</span>";
     });
+
 
 
   svg.call(tip);
   svg.call(tip_man);
-
-
-
-    //Variable to hold autocomplete options
-    var keys;
-
-    //Load US States as options from CSV - but this can also be created dynamically
-    d3.csv("names.csv",function (csv) {
-        keys=csv;
-        start();
-    });
-
-
-    //Call back for when user selects an option
-    function onSelect(d) {
-      temp_richting = d.richting
-      changeLevelColor(3);
-      prepareData(3, jaar, d.richting, d.studie, "totaal");
-    }
-
-    //Setup and render the autocomplete
-    function start() {
-        var mc = autocomplete(document.getElementById('test'))
-                .keys(keys)
-                .dataField("studie")
-                .placeHolder("zoek studie")
-                .width(960)
-                .height(500)
-                .onSelected(onSelect)
-                .render();
-    }
-
 
 
 function changeLevelColor(niveau){
@@ -133,30 +144,53 @@ function changeLevelColor(niveau){
   d3.select("#n1")
     .on("click", function(){
       changeLevelColor(1);
-      prepareData(niveau, jaar);
+      prepareData(1, jaar, "totaal", "totaal", universiteit);
     })
-    .style("background-color", function(){if (niveau == 1){return "#00a651"}});
+    .style("background-color", function(){if (niveau == 1){return "#00a651"}})
+    .on("mouseover", function() {
+        d3.select(this).style("border", "2px solid black");
+      })
+    .on("mouseout", function() {
+        d3.select(this).style("border", "none");
+    });
+
 
     d3.select("#n2")
       .on("click", function(){
+        if (temp_richting == 0)
+        {
+          alert("kies een richting op de barchart om naar het volgende niveau te gaan");
+        }
+        else {
         changeLevelColor(2);
-        prepareData(2, jaar, temp_richting)
+        prepareData(2, jaar, temp_richting, "totaal", universiteit);
+      }
+      })
+      .on("mouseover", function() {
+          d3.select(this).style("border", "2px solid black");
+        })
+      .on("mouseout", function() {
+          d3.select(this).style("border", "none");
       })
 
 
-  prepareData(niveau, jaar);
+  prepareData(niveau, jaar, "totaal", "totaal", universiteit);
 
   d3.selectAll(".btn.btn-default")
     .on("click", function(){
       jaar = this.getAttribute("id");
-      prepareData(1, jaar);
+      prepareData(1, jaar, "totaal", "totaal", universiteit);
       changeLevelColor(1);
+      d3.selectAll(".active.btn.btn-default")
+      .classed("active btn btn-default", false)
+      .classed("btn btn-default", true);
     });
+
 
   function prepareData(niveau, jaar, richting = "totaal", studie = "totaal", universiteit = "totaal") {
     svg.selectAll("*").remove();
     d3.json("datastudies_3.json", function(error, json) {
-      prepareDataUversities(json, niveau, jaar, richting, studie);
+      prepareDataUversities(json, niveau, jaar, richting, studie, universiteit);
       prepareDataYears(json, niveau, richting, studie, universiteit);
       prepareDataMain(json, niveau, jaar, richting, studie, universiteit);
       });
@@ -168,7 +202,7 @@ function changeLevelColor(niveau){
         .html("verschillen tussen richtingen");
         d3.select("#title_A2")
         .html("alle richtingen");
-      var data = fetchData(json, json[jaar], "totaal", "key", "totaal", "totaal",jaar);
+      var data = fetchData(json, json[jaar], "totaal", "key", "totaal", universiteit, jaar);
       drawBarChart(data, niveau, richting, universiteit, svg);
     }
     if (niveau == 2){
@@ -176,7 +210,7 @@ function changeLevelColor(niveau){
         .html("verschillen binnen richting");
         d3.select("#title_A2")
         .html("richting: " + richting);
-      data = fetchData(json, json[jaar][richting], "totaal", richting, "key", "totaal",jaar);
+      data = fetchData(json, json[jaar][richting], "totaal", richting, "key", universiteit,jaar);
       drawBarChart(data, niveau, richting, universiteit, svg);
     }
     if (niveau == 3){
@@ -184,8 +218,8 @@ function changeLevelColor(niveau){
         .html("verschillen binnen studie");
         d3.select("#title_A2")
         .html("studie: " + studie);
-      var data = [{"label": "man", "value": json[jaar][richting][studie]["totaal"]["man"]}, {"label": "vrouw", "value": json[jaar][richting][studie]["totaal"]["vrouw"]}]
-      drawPieChart(data);
+      var data = [{"label": "man", "value": json[jaar][richting][studie][universiteit]["man"], "key": studie}, {"label": "vrouw", "value": json[jaar][richting][studie][universiteit]["vrouw"], "key":studie}]
+      drawPieChart(data, studie);
     }
   }
   function prepareDataYears(json, niveau, richting, studie, universiteit){
@@ -225,13 +259,14 @@ function changeLevelColor(niveau){
         .html("studie: " + studie);
       data = fetchData(json, json[jaar][richting][studie], "totaal", richting, studie, "key", jaar);
     }
-    drawBarChart(data, niveau, richting = "totaal", "totaal", svg2)
+    drawBarChart(data, niveau, richting = "totaal", universiteit, svg2)
   }
 
   function fetchData(data, search, avoid, richting, studie, universiteit, jaar) {
       var man = [];
       var vrouw = [];
-      var keys = []
+      var keys = [];
+      var newkeys = [];
       jaar_oud = jaar;
       richting_oud = richting;
       studie_oud = studie;
@@ -258,16 +293,18 @@ function changeLevelColor(niveau){
         {
           richting = keys[key];
         }
-      man.push({"key": keys[key], "value": parseInt(data[jaar][richting][studie][universiteit]["man"]) })
-      vrouw.push({"key": keys[key], "value": parseInt(data[jaar][richting][studie][universiteit]["vrouw"]) })
+      if (data[jaar][richting][studie].hasOwnProperty(universiteit)){
+        man.push({"key": keys[key], "value": parseInt(data[jaar][richting][studie][universiteit]["man"]) })
+        vrouw.push({"key": keys[key], "value": parseInt(data[jaar][richting][studie][universiteit]["vrouw"]) })
+        newkeys.push(keys[key]);
+      }
       }
       data = [man, vrouw];
-      bla = [0,1];
-      if (universiteit_oud == "totaal"){
-        x0.domain(keys).rangeBands([0, width], .2);
+      if (universiteit_oud != "key"){
+        x0.domain(newkeys).rangeBands([0, width], .2);
       }
       else {
-        x0.domain(keys).rangeBands([0, 400], .2);
+        x0.domain(newkeys).rangeBands([0, 400], .2);
       }
       x1.domain(d3.range(m)).rangeBands([0, x0.rangeBand()]);
       y.domain([0, Math.max(d3.max(vrouw, function(d) {  return d.value; }), d3.max(man, function(d) {  return d.value; }))]);
@@ -275,7 +312,17 @@ function changeLevelColor(niveau){
 
   }
 
-  function drawPieChart(data){
+  function drawPieChart(data, studie){
+
+  if (data[0].value + data[1].value == 0){
+    console.log("geen data" + jaar);
+    var g = svg.append("g")
+      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+      .append("text")
+      .style("text-anchor", "middle")
+      .text("deze studie heeft geen studenten in " + jaar);
+  }
+  else {
   var g = svg.append("g")
     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
     .selectAll(".arc")
@@ -289,12 +336,21 @@ function changeLevelColor(niveau){
       .style("fill", function(d, i) { return z(i); })
       .on("mouseover", function(d) {
         d3.select(this).style("fill-opacity", 0.8);
-        tip.show(d);
+        if (d3.select(this).style("fill") == "rgb(70, 130, 180)"){
+          d.key = d.data.key;
+          tip_man.show(d);
+        }
+        else{
+          d.key = d.data.key;
+          tip.show(d);
+        }
       })
       .on("mouseout", function(d) {
         d3.select(this).style("fill-opacity", 1);
         tip.hide(d);
+        tip_man.hide(d);
       });
+    }
 }
 
 function DrawLineChart(data){
@@ -328,9 +384,14 @@ function DrawLineChart(data){
         .attr("cy", function(d) { return y_line(d.value); })
         .style("fill", "steelblue")
         .on("mouseover", function(d) {
-            tip_man.show(d);})
+          d3.select(this).style("fill-opacity", 0.8);
+          if (typeof(d.key) != "string"){
+            d.key = formatTime(d.key);
+          };
+          tip_man.show(d);})
         .on("mouseout", function(d) {
-            tip_man.hide(d);
+          d3.select(this).style("fill-opacity", 1);
+          tip_man.hide(d);
         });
 
   svg3.selectAll("dot")
@@ -341,10 +402,15 @@ function DrawLineChart(data){
       .attr("cy", function(d) { return y_line(d.value); })
       .style("fill", "#ff1a8c")
       .on("mouseover", function(d) {
+        d3.select(this).style("fill-opacity", 0.8);
+        if (typeof(d.key) != "string"){
+          d.key = formatTime(d.key);
+        };
         tip.show(d)
       })
       .on("mouseout", function(d) {
-          tip.hide(d);
+        d3.select(this).style("fill-opacity", 1);
+        tip.hide(d);
       });
 
   svg3.append("g")			// Add the X Axis
@@ -379,6 +445,7 @@ chart.append("g")
       d3.select(this).style("fill", "black");
     })
     .on("click", function(d) {
+      if (chart == svg){
       if (niveau == 1){
       temp_richting = d;
       changeLevelColor(niveau+1);
@@ -388,6 +455,7 @@ chart.append("g")
         changeLevelColor(niveau+1);
         prepareData(niveau+1, jaar, richting, d, universiteit);
       }
+    }
     })
 
 chart.append("g")
@@ -405,8 +473,12 @@ chart.append("g")
   .attr("height", function(d) {return height - y(d.value)})
   .attr("x", function(d) { return x0(d.key); })
   .attr("y", function(d) { return y(d.value)})
+  .style("fill-opacity", function(d) { if (chart == svg2 && universiteit != "totaal") {if(d.key != universiteit) {return 0.4}}} )
   .on("mouseover", function(d) {
     d3.select(this).style("fill-opacity", 0.8);
+    //data = fetchData(data3, data3["totaal"]["totaal"]["totaal"], "totaal", "totaal", "totaal", d, jaar);
+    //console.log(data);
+    //prepareDataYears(data, niveau, "totaal", "totaal", d);
     if (d3.select(this).style("fill") == "rgb(70, 130, 180)"){
       tip_man.show(d);
     }
@@ -415,21 +487,30 @@ chart.append("g")
     }
   })
   .on("mouseout", function(d) {
+    if (chart == svg2 && universiteit != d.key && universiteit != "totaal"){
+      d3.select(this).style("fill-opacity", 0.4);
+    }
+    else{
     d3.select(this).style("fill-opacity", 1);
-    tip.hide(d);
+    }
     tip_man.hide(d);
+    tip.hide(d);
   })
   .on("click", function(d) {
-    if (niveau == 1){
-    temp_richting = d.key;
-    changeLevelColor(niveau+1);
-    prepareData(niveau+1, jaar, d.key, "totaal", universiteit);
-    tip.hide(d);
-    }
-    if (niveau == 2){
+    if (chart == svg){
+      if (niveau == 1){
+      temp_richting = d.key;
       changeLevelColor(niveau+1);
-      prepareData(niveau+1, jaar, richting, d.key, universiteit);
+      prepareData(niveau+1, jaar, d.key, "totaal", universiteit);
       tip.hide(d);
+      tip_man.hide(d);
+    }
+      if (niveau == 2){
+        changeLevelColor(niveau+1);
+        prepareData(niveau+1, jaar, richting, d.key, universiteit);
+        tip.hide(d);
+        tip_man.hide(d);
+      }
     }
   })
 }

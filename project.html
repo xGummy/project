@@ -6,20 +6,27 @@
   <link rel="stylesheet" href="archive/fonts/bariol/bariol.css"/>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <link rel="stylesheet" href="archive/styles/style.css"/>
-  <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="project.css"/>
+  <link href="select2-4.0.3/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 
 <body>
-  <div id="test"> </div>
+
+
   <div class="container">
     <div class="page-header">
       <div class="row">
-      <div class="col-md-9">
+      <div class="col-md-8">
       <h1> Verschillen in studiekeuze tussen jongens en meisjes </h1>
+      <h3>Jongens en meisjes kiezen vaak voor andere studies. Algemeen bekend is dat jongens vaker
+       voor technische studies kiezen, en meisjes vaker voor culture studies. Maar hoe zit dit nu precies?
+       Waar zitten de grootste verschillen? Welke studies zijn juist het meest gelijk?
+       En is er verandering in de loop van de tijd?
+     </h3>
     </div>
-    <div class="col-md-3">
-      <img src="stu.png" alt="Smiley face" height="200">
+    <div class="col-md-4">
+      <img src="stu3.png" alt="Smiley face">
     </div>
     </div>
       <div class="row">
@@ -29,11 +36,27 @@
           <button type="button" class="btn btn-default" class="uni" id="2012">2012</button>
           <button type="button" class="btn btn-default" class="uni" id="2013">2013</button>
           <button type="button" class="btn btn-default" class="uni" id="2014">2014</button>
-          <button type="button" class="btn btn-default" class="uni" id="2015">2015</button>
+          <button type="button" class="active btn btn-default" class="uni" id="2015">2015</button>
         </div>
+        <select class="js-example-data-array" id = "universiteit"><option id="totaal">alle universiteiten</option>
+          <option class="uni" id="Erasmus Universiteit Rotterdam">Erasmus Universiteit Rotterdam</option>
+          <option class="uni" id="Radboud Universiteit Nijmegen">Radboud Universiteit Nijmegen</option>
+          <option class ="uni" id="Rijksuniversiteit Groningen">Rijksuniversiteit Groningen</option>
+          <option class ="uni" id="Technische Universiteit Delft">Technische Universiteit Delft</option>
+          <option class ="uni" id="Technische Universiteit Eindhoven">Technische Universiteit Eindhoven</option>
+          <option class ="uni" id="Tilburg University">Tilburg University</option>
+          <option class ="uni" id="Universiteit Leiden">Universiteit Leiden</option>
+          <option class = "uni" id="Universiteit Maastricht">Universiteit Maastricht</option>
+          <option class = "uni" id="Universiteit Twente">Universiteit Twente</option>
+          <option class = "uni" id="Universiteit Utrecht">Universiteit Utrecht</option>
+          <option class = "uni" id="Universiteit van Amsterdam">Universiteit van Amsterdam</option>
+          <option class = "uni"id="Vrije Universiteit Amsterdam">Vrije Universiteit Amsterdam</option>
+          <option class = "uni"id="Wageningen University">Wageningen University</option>
+        </select>
       </div>
 
         <div class="col-md-6">
+          <select class="js-example-data-array" id="studie"><option></option></select>
         </div>
       </div>
     </div>
@@ -44,7 +67,8 @@
     <div class="row">
       <div class = "col-lg-9 col-md-9 col-sm-12 col-xs-12">
         <h2 id="title_A1"> verschillen tussen richtingen </h2>
-        <h4 id="title_A2">alle richtingen</h4>
+        <h5 id="title_A2">alle richtingen</h5>
+        <h5 id="title_A3"> alle universiteiten </h5>
         <svg id = "chart_A" ></svg>
       </div>
       <div class = "col-lg-3 col-md-3 col-sm-6 col-xs-6">
@@ -117,45 +141,30 @@
   <div class = "container">
     <div class = "row">
       <div class = "col-lg-6 col-md-6 col-sm-12 col-xs-12">
-        <h3> Verschillen binnen universiteiten </h3>
-        <h4 id="title_B"> alle richtingen </h4>
+        <h3> Verschillen tussen universiteiten </h3>
+        <h5 id="title_B"> alle richtingen </h5>
+        <h5 id="title_B1"> alle universiteiten </h5>
         <svg id = "chart_B" ></svg>
       </div>
       <div class = "col-lg-6 col-md-6 col-sm-12 col-xs-12">
         <h3> ontwikkeling in jaren </h3>
-        <h4 id="title_C"> alle richtingen </h4>
+        <h5 id="title_C"> alle richtingen </h5>
+        <h5 id="title_C1"> alle universiteiten </h5>
         <svg id = "chart_C" ></svg>
       </div>
   </div>
 
   </div>
-  <!--
-    <div class="dropdown">
-      <button onclick="myFunction()" class="dropbtn">Dropdown</button>
-        <div id="myDropdown" class="dropdown-content">
-          <p class="uni" id="Erasmus Universiteit Rotterdam">Erasmus Universiteit Rotterdam</p>
-          <p class="uni" id="Radboud Universiteit Nijmegen">Radboud Universiteit Nijmegen</p>
-          <p class ="uni" id="Rijksuniversiteit Groningen">Rijksuniversiteit Groningen</p>
-          <p class ="uni" id="Technische Universiteit Delft">Technische Universiteit Delft</p>
-          <p class ="uni" id="Technische Universiteit Eindhoven">Technische Universiteit Eindhoven</p>
-          <p class ="uni" id="Tilburg University">Tilburg University</p>
-          <p class ="uni" id="Universiteit Leiden">Universiteit Leiden</p>
-          <p class = "uni" id="Universiteit Maastricht">Universiteit Maastricht</p>
-          <p class = "uni" id="Universiteit Twente">Universiteit Twente</p>
-          <p class = "uni" id="Universiteit Utrecht">Universiteit Utrecht</p>
-          <p class = "uni" id="Universiteit van Amsterdam">Universiteit van Amsterdam</p>
-          <p class = "uni"id="Vrije Universiteit Amsterdam">Vrije Universiteit Amsterdam</p>
-          <p class = "uni"id="Wageningen University">Wageningen University</p>
-      </div>
-  </div>
-  -->
-
+  <hr>
+  <footer>
+    <p>&copy; Emma van Proosdij      bron: DUO, dataset: Aantal wo ingeschrevenen (binnen domein ho)</p>
+  </footer>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
+  <script src="bootstrap.min.js"></script>
   <script src="https://d3js.org/d3.v3.min.js"></script>
-  <script type="text/javascript" src="archive/scripts/autocomplete.js"></script>
   <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+  <script src="select2-4.0.3/dist/js/select2.min.js"></script>
   <script src="project_save2.js"></script>
 </body>
 </html>

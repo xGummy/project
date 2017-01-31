@@ -60,13 +60,6 @@ main {
 }
 
 
-footer {
-  clear: left;
-  width: 100%;
-  background: #ccc;
-  text-align: center;
-  padding: 4px 0;
-}
 
 #wrapper {
   overflow: hidden;
@@ -306,6 +299,11 @@ img {
                 .timeline-centered .timeline-entry .timeline-entry-inner .timeline-icon.bg-success {
                     background-color: lightgrey;
                     color: #fff;
+                }
+
+                .timeline-centered .timeline-entry .timeline-entry-inner .timeline-icon.bg-success:hover{
+                  background-color: #bfff80;
+                  color: #fff;
                 }
 
                 .timeline-centered .timeline-entry .timeline-entry-inner .timeline-icon.bg-info {
