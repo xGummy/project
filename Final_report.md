@@ -7,7 +7,7 @@ Dit is vrij algemeen, maar hoe zit het nou precies? Welke studies zijn populair 
 Deze visualisatie laat zien welke studies, richtingen en universiteiten vooral door jongens en welke door meisjes worden gekozen voor 
 WO bachelor studies. 
 
-PLAATJE
+![](doc/screenshot.jpg)
 
 #Design
 In mijn visualisatie zijn drie gelinkte grafieken aanwezig. Voor de uitleg van mijn visualisatie heb ik de verschillende grafieken A, B en C genoemd, zoals weergegeven op het plaatje.
