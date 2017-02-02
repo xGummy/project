@@ -1,0 +1,145 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <title>Verschillen in studiekeuze tussen jongens en meisjes</title>
+  <link rel="stylesheet" href="css/bariol/bariol.css"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" type="text/css" href="css/project_save1.css"/>
+  <link href="css/select2.min.css" rel="stylesheet" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="page-header">
+      <div class="row">
+        <div class="col-md-8">
+          <h1> Verschillen in studiekeuze tussen jongens en meisjes </h1>
+          <h3>Jongens en meisjes kiezen vaak voor andere studies. Jongens kiezen vaker
+              voor technische studies, terwijl meisjes vaker voor culture studies kiezen. Maar hoe zit dit nu precies?
+              Waar zitten de grootste verschillen? Welke studies zijn juist het meest gelijk?
+              En is er verandering in de loop van de tijd?
+          </h3>
+        </div>
+      <div class="col-md-4">
+        <img src="stu3.png" alt="Smiley face">
+      </div>
+      </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="btn-group btn-group-lg" role="group" aria-label="...">
+              <button type="button" class="btn btn-default type" id="2011">2011</button>
+              <button type="button" class="btn btn-default type" id="2012">2012</button>
+              <button type="button" class="btn btn-default type" id="2013">2013</button>
+              <button type="button" class="btn btn-default type" id="2014">2014</button>
+              <button type="button" class="btn btn-default type active" id="2015">2015</button>
+            </div>
+            <br>
+            <p> kies een universiteit </p>
+          <select class="js-example-data-array" id = "universiteit"><option id="totaal">alle universiteiten</option>
+            <option class="uni" id="Erasmus Universiteit Rotterdam">Erasmus Universiteit Rotterdam</option>
+            <option class="uni" id="Radboud Universiteit Nijmegen">Radboud Universiteit Nijmegen</option>
+            <option class ="uni" id="Rijksuniversiteit Groningen">Rijksuniversiteit Groningen</option>
+            <option class ="uni" id="Technische Universiteit Delft">Technische Universiteit Delft</option>
+            <option class ="uni" id="Technische Universiteit Eindhoven">Technische Universiteit Eindhoven</option>
+            <option class ="uni" id="Tilburg University">Tilburg University</option>
+            <option class ="uni" id="Universiteit Leiden">Universiteit Leiden</option>
+            <option class = "uni" id="Universiteit Maastricht">Universiteit Maastricht</option>
+            <option class = "uni" id="Universiteit Twente">Universiteit Twente</option>
+            <option class = "uni" id="Universiteit Utrecht">Universiteit Utrecht</option>
+            <option class = "uni" id="Universiteit van Amsterdam">Universiteit van Amsterdam</option>
+            <option class = "uni"id="Vrije Universiteit Amsterdam">Vrije Universiteit Amsterdam</option>
+            <option class = "uni"id="Wageningen University">Wageningen University</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <p id="studie_title"> zoek studie </p>
+          <select class="js-example-data-array" id="studie"><option></option></select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class = "jumbotron">
+    <div class="container">
+      <div class="row">
+        <div class = "col-lg-9 col-md-9 col-sm-12 col-xs-12">
+          <h2 id="title_A1"> verschillen tussen richtingen </h2>
+          <h5 id="title_A2">alle richtingen</h5>
+          <h5 id="title_A3"> alle universiteiten </h5>
+          <svg id = "chart_A" ></svg>
+        </div>
+        <div class = "col-lg-3 col-md-3 col-sm-6 col-xs-6">
+          <div class="timeline-centered">
+            <article class="timeline-entry">
+              <div class="timeline-entry-inner">
+                <div class="timeline-icon bg-success" id="n1">
+                  <i class="entypo-feather"></i>
+                </div>
+                <div class="timeline-label">
+                  <h2>Niveau 1: verschillen tussen richtingen</h2>
+                  <p>Hier zie je de verschillen tussen jongens en meisjes binnen elke richting. Klik op een richting om naar het volgende niveau te gaan</p>
+                </div>
+              </div>
+            </article>
+          <article class="timeline-entry">
+            <div class="timeline-entry-inner">
+              <div class="timeline-icon bg-success" id="n2">
+                <i class="entypo-suitcase"></i>
+              </div>
+              <div class="timeline-label">
+                <h2>Niveau 2: Verschillen tussen studie binnen richting</h2>
+                <p>Hier zie je de verschillen binnen een door jou gekozen richting. Klik op een studie om naar het volgende niveau te gaan</p>
+              </div>
+            </div>
+          </article>
+          <article class="timeline-entry">
+            <div class="timeline-entry-inner">
+              <div class="timeline-icon bg-success" id="n3">
+                <i class="entypo-location"></i>
+              </div>
+                <div class="timeline-label">
+                  <h2>Niveau 3: verschillen binnen studie</h2>
+                  <p>Hier zie je de verhouding jongens/meisjes binnen de door jou geslecteerde studie</p>
+                </div>
+              </div>
+          </article>
+        </div>
+      </div>
+    </div>
+    <ul id="legend">
+        <li><span class="bluebox"></span>jongens</li>
+        <li><span class="pinkbox"></span>meisjes</li>
+    </ul>
+  </div>
+</div>
+<div class = "container">
+  <div class = "row">
+    <div class = "col-lg-6 col-md-6 col-sm-12 col-xs-12">
+      <h3> Verschillen tussen universiteiten </h3>
+      <h5 id="title_B"> alle richtingen </h5>
+      <h5 id="title_B1"> alle universiteiten </h5>
+      <svg id = "chart_B" ></svg>
+    </div>
+    <div class = "col-lg-6 col-md-6 col-sm-12 col-xs-12">
+      <h3> ontwikkeling in jaren </h3>
+      <h5 id="title_C"> alle richtingen </h5>
+      <h5 id="title_C1"> alle universiteiten </h5>
+      <svg id = "chart_C" ></svg>
+    </div>
+  </div>
+</div>
+<hr>
+<footer>
+  <h5>&copy; Emma van Proosdij      bron: DUO, Aantal wo ingeschrevenen (binnen domein ho)</h5>
+</footer>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="javascript/bootstrap.min.js"></script>
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+  <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+  <script src="javascript/select2.min.js"></script>
+  <script src="javascript/collect_data.js"></script>
+  <script src="javascript/charts.js"></script>
+  <script src="javascript/controls.js"></script>
+</body>
+</html>
